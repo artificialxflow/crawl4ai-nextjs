@@ -1,0 +1,64 @@
+{
+  "info": {
+    "name": "Crawl4AI API Workflow",
+    "description": "Collection for testing the Crawl4AI and LLM extraction workflow.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Crawl URL",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer logikmeter" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"urls\": [\"https://en.wikipedia.org/wiki/OpenAI\"]\n}"
+        },
+        "url": {
+          "raw": "https://crawl4ai.logikmeter.com/crawl",
+          "protocol": "https",
+          "host": ["crawl4ai", "logikmeter", "com"],
+          "path": ["crawl"]
+        }
+      }
+    },
+    {
+      "name": "Get Result",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer logikmeter" }
+        ],
+        "url": {
+          "raw": "https://crawl4ai.logikmeter.com/task/{{task_id}}",
+          "protocol": "https",
+          "host": ["crawl4ai", "logikmeter", "com"],
+          "path": ["task", "{{task_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Extract Data",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"content\": \"<paste markdown or html from Get Result here>\",\n  \"fields\": [\n    {\n      \"name\": \"title\",\n      \"description\": \"The title of the page\"\n    },\n    {\n      \"name\": \"description\",\n      \"description\": \"The meta description of the page\"\n    }\n  ],\n  \"model\": \"gpt-4\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/extract",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "extract"]
+        }
+      }
+    }
+  ]
+} 
